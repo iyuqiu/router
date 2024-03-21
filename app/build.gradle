@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+
+println "${username}"
+
+def androidId = rootProject.ext.androidId
+def appId = rootProject.ext.appId
+def support = rootProject.ext.dependencies
+def url = rootProject.ext.url
+
+android {
+    namespace 'com.example.router'
+    compileSdk androidId.compileSdk
+
+    defaultConfig {
+        applicationId appId.app
+        minSdk androidId.minSdk
+        targetSdk androidId.targetSdk
+        versionCode androidId.versionCode
+        versionName androidId.versionName
+    }
+
+    buildTypes {
+        debug{
+            buildConfigField("String","debug","\"${url.debugUrl}\"")
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    viewBinding {
+        enabled = true
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    implementation project(':login')
+    implementation project(':order')
+    support.each { k, v ->
+        implementation v
+    }
+}

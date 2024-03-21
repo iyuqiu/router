@@ -1,0 +1,45 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+println "${username}"
+
+//rootProject.ext.username = 16 弱语言
+
+println "${rootProject.ext.username}"
+
+def androidId = rootProject.ext.androidId
+def support = rootProject.ext.dependencies
+
+android {
+    namespace 'com.example.login'
+    compileSdk androidId.compileSdk
+
+    defaultConfig {
+        minSdk androidId.minSdk
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+     implementation support.appcompat
+     implementation support.material
+     implementation support.core
+
+}

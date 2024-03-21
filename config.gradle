@@ -1,0 +1,20 @@
+ext {
+    username = "xiaoma"
+
+    isRelease = true
+
+    androidId = [compileSdk : 34,
+                 minSdk     : 24,
+                 targetSdk  : 34,
+                 versionCode: 1,
+                 versionName: "1.0"]
+
+    url = ["debugUrl"  : "www.debug.com",
+           "releaseUrl": "www.release.com"]
+
+    appId = [app: "com.example.router"]
+
+    dependencies = ["appcompat": "androidx.appcompat:appcompat:1.6.1",
+                    "material" : "com.google.android.material:material:1.9.0",
+                    "core"     : "androidx.core:core-ktx:1.12.0"]
+}
