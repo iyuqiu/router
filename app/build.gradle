@@ -1,39 +1,39 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin)
+    id 'kotlin-kapt'
 }
-
-
-println "${username}"
-
-def androidId = rootProject.ext.androidId
-def appId = rootProject.ext.appId
-def support = rootProject.ext.dependencies
-def url = rootProject.ext.url
 
 android {
     namespace 'com.example.router'
-    compileSdk androidId.compileSdk
+    compileSdk Integer.parseInt(libs.versions.compileSdk.get())
 
     defaultConfig {
-        applicationId appId.app
-        minSdk androidId.minSdk
-        targetSdk androidId.targetSdk
-        versionCode androidId.versionCode
-        versionName androidId.versionName
+        applicationId = libs.versions.applicationId.get()
+        minSdk = Integer.parseInt(libs.versions.minSdk.get())
+        targetSdk = Integer.parseInt(libs.versions.targetSdk.get())
+        versionCode = Integer.parseInt(libs.versions.versionCode.get())
+        versionName = libs.versions.versionName.get()
+
+
+        /**
+         *  用于APT 传参接收，需要写在defaultConfig节点下
+         */
+        javaCompileOptions{
+            annotationProcessorOptions{
+                arguments = [moduleName:project.getName(),packageNameForAPT:packageNameForAPT]
+            }
+        }
     }
 
     buildTypes {
-        debug{
-            buildConfigField("String","debug","\"${url.debugUrl}\"")
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
@@ -44,15 +44,16 @@ android {
         enabled = true
     }
 
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
-    implementation project(':login')
-    implementation project(':order')
-    support.each { k, v ->
-        implementation v
+    api project(':common')
+    implementation project(':annotation')
+    kapt project(':compiler')
+    if (isRelease) {
+        implementation project(':login')
+        implementation project(':order')
     }
+    implementation(libs.bundles.appcompatBundles)
+    implementation(libs.bundles.widgetBundles)
 }

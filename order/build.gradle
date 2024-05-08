@@ -1,21 +1,25 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin)
+    id 'kotlin-kapt'
 }
 
-def androidId = rootProject.ext.androidId
-def appId = rootProject.ext.appId
-def support = rootProject.ext.dependencies
 
 android {
     namespace 'com.example.order'
-     compileSdk androidId.compileSdk
+    compileSdk Integer.parseInt(libs.versions.compileSdk.get())
 
     defaultConfig {
-        minSdk androidId.minSdk
+        minSdk = Integer.parseInt(libs.versions.minSdk.get())
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName(), packageNameForAPT: packageNameForAPT]
+            }
+        }
     }
 
     buildTypes {
@@ -31,10 +35,15 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-    support.each { k, v ->
-        implementation v
-    }
+    implementation project(':common')
+    implementation project(':annotation')
+    kapt project(':compiler')
+    implementation(libs.bundles.appcompatBundles)
+    implementation(libs.bundles.widgetBundles)
 }

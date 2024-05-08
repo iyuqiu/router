@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+}
+
+//java控制台输出中文乱码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation project(':annotation')
+    implementation libs.javapoet
+    compileOnly libs.auto.service
+    annotationProcessor libs.auto.service
+}
