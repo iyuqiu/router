@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.login.LoginActivity
+import com.example.login.R
 import com.example.login.databinding.LoginActivityDebugBinding
 
 class DebugLoginActivity : AppCompatActivity() {
@@ -16,5 +17,6 @@ class DebugLoginActivity : AppCompatActivity() {
         binding.btnClick.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
+//        R.layout.login_activity_debug
     }
 }

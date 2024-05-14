@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android路由</string>
+    <string name="app_name">组件化App</string>
     <string name="app_home">首页</string>
     <string name="click_router">路由跳转</string>
 </resources>

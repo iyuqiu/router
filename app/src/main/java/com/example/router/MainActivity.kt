@@ -8,45 +8,45 @@ import com.example.annotation.Router
 import com.example.common.base.BaseActivity
 import com.example.common.originrouter.RecordPathManager
 import com.example.router.databinding.ActivityMainBinding
+import com.example.router_api.RouterManager
 
 @Router(path = "/app/MainActivity")
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private  val TAG_APP = "MainActivity>>>"
+    private val TAG = "app>>>"
 
     @Parameter
-    var name:String = ""
+    var name: String = ""
 
     @Parameter
-    var age:Int = 0
+    var age: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.e(TAG_APP, "onCreate: MainActivity")
+        Log.e(TAG, "onCreate: MainActivity-url")
         binding.btnRouter.setOnClickListener {
+            binding.tvContent.text = "app首页-url=${BuildConfig.API_URL}"
             clazzMethod()
+        }
+
+
+        binding.btnLogin.setOnClickListener {
+            RouterManager.build("/login/LoginActivity").navigation(this)
+        }
+
+        binding.btnOrder.setOnClickListener {
+            RouterManager.build("/order/OrderActivity").navigation(this)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.e(TAG_APP, "onResume: ", )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.e(TAG_APP, "onPause: ", )
-    }
-
-
-    private fun mapMethod(){
+    private fun mapMethod() {
         val clazz = RecordPathManager.getTargetClass("order", "/order/OrderActivity")
         clazz?.let {
-            val intent = Intent(this,clazz)
+            val intent = Intent(this, clazz)
             startActivity(intent)
         }
     }
@@ -59,14 +59,9 @@ class MainActivity : BaseActivity() {
             val clazz = Class.forName("com.example.order.OrderActivity")
             val intent = Intent(this, clazz)
             startActivity(intent)
-        } catch (exception:ClassNotFoundException){
-            Log.e(TAG_APP, "clazzMethod: $exception", )
+        } catch (exception: ClassNotFoundException) {
+            Log.e(TAG, "clazzMethod: $exception")
         }
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG_APP, "onDestroy: ", )
     }
 }

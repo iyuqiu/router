@@ -10,8 +10,6 @@ android {
 
     defaultConfig {
         minSdk = Integer.parseInt(libs.versions.minSdk.get())
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 

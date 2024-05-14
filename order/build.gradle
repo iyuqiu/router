@@ -1,7 +1,11 @@
-plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin)
-    id 'kotlin-kapt'
+if (isRelease) {
+    apply plugin: 'com.android.library'
+    apply plugin: 'org.jetbrains.kotlin.android'
+    apply plugin: 'kotlin-kapt'
+} else {
+    apply plugin: 'com.android.application'
+    apply plugin: 'org.jetbrains.kotlin.android'
+    apply plugin: 'kotlin-kapt'
 }
 
 
@@ -10,9 +14,13 @@ android {
     compileSdk Integer.parseInt(libs.versions.compileSdk.get())
 
     defaultConfig {
+        if (!isRelease) {
+            applicationId ="com.example.order"
+            targetSdk = Integer.parseInt(libs.versions.targetSdk.get())
+            versionCode = Integer.parseInt(libs.versions.versionCode.get())
+            versionName = libs.versions.versionName.get()
+        }
         minSdk = Integer.parseInt(libs.versions.minSdk.get())
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
         javaCompileOptions {
@@ -38,12 +46,26 @@ android {
     viewBinding {
         enabled = true
     }
+
+    sourceSets {
+        main {
+            if (!isRelease) {
+                manifest.srcFile "src/main/debug/AndroidManifest.xml"
+            } else {
+                manifest.srcFile "src/main/AndroidManifest.xml"
+                java {
+                    exclude '**debug**'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
     implementation project(':common')
     implementation project(':annotation')
     kapt project(':compiler')
+//    implementation platform(libs.kotlin.bom)
     implementation(libs.bundles.appcompatBundles)
     implementation(libs.bundles.widgetBundles)
 }

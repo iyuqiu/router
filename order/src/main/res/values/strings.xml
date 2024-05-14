@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">订单module</string>
     <string name="order_home">order模块-内部首页</string>
     <string name="click_router">路由跳转</string>
 </resources>

@@ -14,6 +14,5 @@ class ListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = OrderActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.e(TAG, "onCreate: OrderActivity")
     }
 }

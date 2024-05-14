@@ -4,7 +4,6 @@
     <application>
         <activity
             android:name=".OrderActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
     </application>
 </manifest>

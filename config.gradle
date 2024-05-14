@@ -1,15 +1,12 @@
 ext {
-    username = "xiaoma"
-
     // false 是每个module都可以独立运行，组件化模式； true：集成化模式，module打包进apk，module不可独立运行
-    isRelease = false
+    isRelease = true
+//    isRelease = false
 
     packageNameForAPT = "com.xiaoma.apt"
 
     url = ["debugUrl"  : "www.debug.com",
            "releaseUrl": "www.release.com"]
 
-    appId = [app: "com.example.router"]
-    loginId = [app: "com.example.login"]
 
 }

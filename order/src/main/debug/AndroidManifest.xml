@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Router"
-        >
+        tools:targetApi="31">
 
         <activity
-            android:name=".debug.DebugLoginActivity"
+            android:name=".debug.DebugOrderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".OrderActivity"
             android:exported="true"/>
 
     </application>
