@@ -1,13 +1,10 @@
 if (isRelease) {
     apply plugin: 'com.android.library'
-    apply plugin: 'org.jetbrains.kotlin.android'
-    apply plugin: 'kotlin-kapt'
 } else {
     apply plugin: 'com.android.application'
-    apply plugin: 'org.jetbrains.kotlin.android'
-    apply plugin: 'kotlin-kapt'
 }
-
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.example.login'
@@ -63,7 +60,6 @@ android {
 dependencies {
     implementation(libs.bundles.appcompatBundles)
     implementation(libs.bundles.widgetBundles)
-//    implementation platform(libs.kotlin.bom)
     implementation project(':common')
     implementation project(':annotation')
     kapt project(':compiler')

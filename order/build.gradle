@@ -1,13 +1,10 @@
 if (isRelease) {
     apply plugin: 'com.android.library'
-    apply plugin: 'org.jetbrains.kotlin.android'
-    apply plugin: 'kotlin-kapt'
 } else {
     apply plugin: 'com.android.application'
-    apply plugin: 'org.jetbrains.kotlin.android'
-    apply plugin: 'kotlin-kapt'
 }
-
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.example.order'
@@ -15,7 +12,7 @@ android {
 
     defaultConfig {
         if (!isRelease) {
-            applicationId ="com.example.order"
+            applicationId = "com.example.order"
             targetSdk = Integer.parseInt(libs.versions.targetSdk.get())
             versionCode = Integer.parseInt(libs.versions.versionCode.get())
             versionName = libs.versions.versionName.get()
@@ -65,7 +62,6 @@ dependencies {
     implementation project(':common')
     implementation project(':annotation')
     kapt project(':compiler')
-//    implementation platform(libs.kotlin.bom)
     implementation(libs.bundles.appcompatBundles)
     implementation(libs.bundles.widgetBundles)
 }
