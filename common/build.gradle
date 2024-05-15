@@ -29,7 +29,6 @@ android {
 }
 
 dependencies {
-
     api project(':router_api')
     implementation(libs.bundles.appcompatBundles)
     implementation(libs.bundles.widgetBundles)

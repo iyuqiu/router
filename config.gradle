@@ -1,7 +1,7 @@
 ext {
     // false 是每个module都可以独立运行，组件化模式； true：集成化模式，module打包进apk，module不可独立运行
-    isRelease = true
-//    isRelease = false
+//    isRelease = true
+    isRelease = false
 
     packageNameForAPT = "com.xiaoma.apt"
 
