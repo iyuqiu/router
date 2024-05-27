@@ -17,6 +17,7 @@ auto-service = "1.1.1"
 kotlinBom = "1.8.0"
 coreKtxVersion = "1.10.1"
 
+
 [libraries]
 #基础与UI
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -34,7 +35,6 @@ kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref 
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "auto-service" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
-
 
 [bundles]
 appcompatBundles = ["appcompat", "core-ktx", "fragment-ktx", "activity-ktx"]

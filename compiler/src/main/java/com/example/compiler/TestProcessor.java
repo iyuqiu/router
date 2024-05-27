@@ -2,6 +2,7 @@ package com.example.compiler;
 
 import com.example.annotation.Router;
 import com.example.annotation.TestAPT;
+import com.example.compiler.utils.EmptyUtils;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -17,7 +18,6 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -26,7 +26,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
-//@AutoService(Processor.class)
+@AutoService(Processor.class)
 public class TestProcessor extends AbstractProcessor {
 
     private Elements elementUtils;// 操作Element工具类
@@ -63,25 +63,26 @@ public class TestProcessor extends AbstractProcessor {
      */
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        if (set.isEmpty()) return false;
-        Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(Router.class);
-        for (Element element : elements) {
-            String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            String className = element.getSimpleName().toString();
-            messager.printMessage(Diagnostic.Kind.NOTE, "被注解的类" + packageName + "/" + className);
+        if (!EmptyUtils.isEmpty(set)) {
+            Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(Router.class);
+            for (Element element : elements) {
+                String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
+                String className = element.getSimpleName().toString();
+                messager.printMessage(Diagnostic.Kind.NOTE, "被注解的类" + packageName + "/" + className);
 
-            MethodSpec main = MethodSpec.methodBuilder("main").addModifiers(Modifier.PUBLIC, Modifier.STATIC).returns(void.class).addParameter(String[].class, "args").addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!").build();
+                MethodSpec main = MethodSpec.methodBuilder("main").addModifiers(Modifier.PUBLIC, Modifier.STATIC).returns(void.class).addParameter(String[].class, "args").addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!").build();
 
-            TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld").addModifiers(Modifier.PUBLIC, Modifier.FINAL).addMethod(main).build();
+                TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld").addModifiers(Modifier.PUBLIC, Modifier.FINAL).addMethod(main).build();
 
-            JavaFile javaFile = JavaFile.builder(packageName, helloWorld).build();
-
-            try {
-                javaFile.writeTo(filer);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                JavaFile javaFile = JavaFile.builder(packageName, helloWorld).build();
+                try {
+                    javaFile.writeTo(filer);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

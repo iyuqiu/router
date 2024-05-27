@@ -51,6 +51,7 @@ android {
 dependencies {
     implementation project(':common')
     implementation project(':annotation')
+
     kapt project(':compiler')
     if (isRelease) {
         implementation project(':login')
